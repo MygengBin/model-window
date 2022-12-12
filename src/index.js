@@ -22,7 +22,7 @@ window.modelWindow = class{
     render(){
         const style = (()=>{
             let str='<style>';
-            str+=`#${this.id}{--mainColor:${this.mainColor};width:100vw;height:100vh;overflow:hidden;background:rgba(0,0,0,.5);position:fixed;top:0;left:0;}`;
+            str+=`#${this.id}{--mainColor:${this.mainColor};width:100vw;height:100vh;overflow:hidden;background:rgba(0,0,0,.5);position:fixed;top:0;left:0;z-index:9999;}`;
             str+=`#${this.id}>.main{width:50%;height:50%;background:white;border-radius:8px;margin: 20vh auto 0;overflow:hidden;}`;
             str+=`#${this.id}>.main>header,#${this.id}>.main>footer{height:12%;position:relative;background-color:white;overflow:hidden;margin:0;}`;
             str+=`#${this.id}>.main>section{height:76%;overflow:hidden;}`;
