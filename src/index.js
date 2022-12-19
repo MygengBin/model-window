@@ -5,8 +5,7 @@ window.modelWindow = class{
     mainColor='#e96d30';
     mainHTML='';
     confirmFunction=()=>{alert('默认')}
-    windowMinWidth='0';
-    windowMinHeight='0';
+    windowStyle='';
     close(){
         document.getElementById(this.id).outerHTML='';
     }
@@ -14,6 +13,7 @@ window.modelWindow = class{
         id,confirmText='确定',title='标题',mainColor='#e96d30',mainHTML='',confirmFunction=()=>{alert('默认传值')},
         windowMinWidth='50%',
         windowMinHeight='50%',
+        windowStyle='',
     }){
         this.id = id;
         this.confirmText = confirmText;
@@ -23,14 +23,15 @@ window.modelWindow = class{
         this.confirmFunction = confirmFunction;
         this.windowMinWidth = windowMinWidth;
         this.windowMinHeight = windowMinHeight;
+        this.windowStyle = windowStyle;
         this.render();
     }
     render(){
         const style = (()=>{
             let str='<style>';
             str+=`#${this.id}{--mainColor:${this.mainColor};width:100vw;height:100vh;overflow:hidden;background:rgba(0,0,0,.5);position:fixed;top:0;left:0;z-index:9999;}`;
-            str+=`#${this.id}>.main{width:${this.windowMinWidth};height:${this.windowMinHeight};background:white;border-radius:8px;margin: 20vh auto 0;overflow:hidden;}`;
-            str+=`#${this.id}>.main>header,#${this.id}>.main>footer{height:12%;position:relative;background-color:white;overflow:hidden;margin:0;}`;
+            str+=`#${this.id}>.main{width: 50%;height50%;background:white;border-radius:8px;margin: 20vh auto 0;overflow:hidden;${this.windowStyle}}`;
+            str+=`#${this.id}>.main>header,#${this.id}>.main>footer{max-height:50px;height:12%;position:relative;background-color:white;overflow:hidden;margin:0;}`;
             str+=`#${this.id}>.main>section{height:76%;overflow:hidden;}`;
             str+=`#${this.id}>.main>header{border-bottom:1px solid #CECECE;}`;
             str+=`#${this.id}>.main>header>b.close{position:absolute;right:2%;top:20%;display:inline-block;font-size:23px;border-radius:50%;border:1px solid var(--mainColor);color:var(--mainColor);width:20px;height:20px;text-align:center;line-height:.89;}`;
@@ -63,11 +64,13 @@ window.modelWindow = class{
             </div>
         </div>`;
         document.body.insertAdjacentHTML('beforeend',str);
-        document.getElementById(this.id).getElementsByClassName('close')[0].addEventListener('click',e=>{
+        const dom = document.getElementById(this.id);
+        dom.getElementsByClassName('close')[0].addEventListener('click',e=>{
             e.stopPropagation();
             this.close();
         })
-        document.getElementById(this.id).getElementsByClassName('confirm')[0].addEventListener('click',e=>{
+        dom.getElementsByTagName('section')[0].style.setProperty('height',(dom.getElementsByClassName('main')[0].clientHeight-(dom.getElementsByTagName('header')[0].clientHeight+dom.getElementsByTagName('footer')[0].clientHeight))+'px','important');
+        dom.getElementsByClassName('confirm')[0].addEventListener('click',e=>{
             e.stopPropagation();
             toString.call(this.confirmFunction)==='[object Function]'?this.confirmFunction():0;
         })
