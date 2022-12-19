@@ -2,14 +2,18 @@ window.modelWindow = class{
     id='';
     confirmText='确定';
     title='标题';
-    mainColor='##e96d30';
+    mainColor='#e96d30';
     mainHTML='';
     confirmFunction=()=>{alert('默认')}
+    windowMinWidth='0';
+    windowMinHeight='0';
     close(){
         document.getElementById(this.id).outerHTML='';
     }
     constructor({
-        id,confirmText='确定',title='标题',mainColor='#e96d30',mainHTML='',confirmFunction=()=>{alert('默认传值')}
+        id,confirmText='确定',title='标题',mainColor='#e96d30',mainHTML='',confirmFunction=()=>{alert('默认传值')},
+        windowMinWidth='50%',
+        windowMinHeight='50%',
     }){
         this.id = id;
         this.confirmText = confirmText;
@@ -17,13 +21,15 @@ window.modelWindow = class{
         this.mainColor = mainColor;
         this.mainHTML = mainHTML;
         this.confirmFunction = confirmFunction;
+        this.windowMinWidth = windowMinWidth;
+        this.windowMinHeight = windowMinHeight;
         this.render();
     }
     render(){
         const style = (()=>{
             let str='<style>';
             str+=`#${this.id}{--mainColor:${this.mainColor};width:100vw;height:100vh;overflow:hidden;background:rgba(0,0,0,.5);position:fixed;top:0;left:0;z-index:9999;}`;
-            str+=`#${this.id}>.main{width:50%;height:50%;background:white;border-radius:8px;margin: 20vh auto 0;overflow:hidden;}`;
+            str+=`#${this.id}>.main{width:${this.windowMinWidth};height:${this.windowMinHeight};background:white;border-radius:8px;margin: 20vh auto 0;overflow:hidden;}`;
             str+=`#${this.id}>.main>header,#${this.id}>.main>footer{height:12%;position:relative;background-color:white;overflow:hidden;margin:0;}`;
             str+=`#${this.id}>.main>section{height:76%;overflow:hidden;}`;
             str+=`#${this.id}>.main>header{border-bottom:1px solid #CECECE;}`;
